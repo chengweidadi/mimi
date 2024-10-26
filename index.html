@@ -15,39 +15,33 @@
             }
         });
 
-        // 检查时间函数，每分钟运行一次
-        function checkTime() {
+        // 定义检查时间的函数
+        function checkReminderTime() {
             const now = new Date();
-            const hours = now.getUTCHours(); // 获取UTC小时
-            const minutes = now.getUTCMinutes(); // 获取UTC分钟
+            const currentMinute = now.getMinutes();
 
-            // 转换为中国时间 20:15
-            const chinaHour = (hours + 8) % 24;  // UTC+8小时
-            const targetHour = 20; // 目标小时
-            const targetMinute = 15; // 目标分钟
-
-            // 如果当前时间为中国时间20:15，则发送通知
-            if (chinaHour === targetHour && minutes === targetMinute) {
-                sendNotification();
+            // 如果当前分钟数是25，则发送提醒
+            if (currentMinute === 25) {
+                sendReminderNotification();
             }
         }
 
-        // 发送通知函数
-        function sendNotification() {
+        // 发送通知提醒
+        function sendReminderNotification() {
             if (Notification.permission === "granted") {
                 new Notification("提醒", {
-                    body: "该学习英语、读书或休息了！",
+                    body: "该修改代码了！",
                     icon: "https://via.placeholder.com/48" // 可自定义图标URL
                 });
             }
         }
 
         // 每分钟检查一次时间
-        setInterval(checkTime, 60000);
+        setInterval(checkReminderTime, 60000);
     </script>
 </head>
 <body>
     <h1>定时提醒</h1>
-    <p>每天中国时间20:15提醒您学习、读书或休息。</p>
+    <p>在25分时会提醒你该修改代码了。</p>
 </body>
 </html>
