@@ -2,60 +2,27 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>定时提醒</title>
-    <script>
-        // 请求通知权限
-        document.addEventListener("DOMContentLoaded", () => {
-            if ("Notification" in window) {
-                Notification.requestPermission().then(permission => {
-                    if (permission !== "granted") {
-                        alert("请允许通知权限以便接收提醒！");
-                    }
-                });
-            }
-        });
-
-        // 定义检查时间的函数
-        function checkReminderTime() {
-            const now = new Date();
-            const currentHour = now.getHours();
-            const currentMinute = now.getMinutes();
-
-            // 如果当前时间是21:05之后的时间，则每分钟发送5次提醒
-            if (currentHour > 21 || (currentHour === 21 && currentMinute >= 5)) {
-                sendMultipleReminders();
-            }
-        }
-
-        // 发送多次提醒
-        function sendMultipleReminders() {
-            let count = 0;
-            const reminderInterval = setInterval(() => {
-                if (count < 5) {
-                    sendReminderNotification();
-                    count++;
-                } else {
-                    clearInterval(reminderInterval); // 停止本次多次提醒
-                }
-            }, 10000); // 每10秒发送一次提醒，1分钟内5次
-        }
-
-        // 发送单个通知提醒
-        function sendReminderNotification() {
-            if (Notification.permission === "granted") {
-                new Notification("提醒", {
-                    body: "这是您的定时提醒！",
-                    icon: "https://via.placeholder.com/48" // 可自定义图标URL
-                });
-            }
-        }
-
-        // 每分钟检查一次时间
-        setInterval(checkReminderTime, 60000);
-    </script>
+    <title>文件上传测试</title>
 </head>
 <body>
-    <h1>定时提醒</h1>
-    <p>每天从中国时间21:05分开始，每分钟提醒您5次。</p>
+    <h1>测试图片上传</h1>
+    <input type="file" accept="image/*" onchange="previewImage(event)" />
+    <br><br>
+    <img id="preview" src="" alt="图片预览" style="max-width: 100%; height: auto; display: none;"/>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 </html>
