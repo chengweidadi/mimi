@@ -21,8 +21,8 @@
             const currentHour = now.getHours();
             const currentMinute = now.getMinutes();
 
-            // 如果当前时间是20:43，则发送提醒
-            if (currentHour === 20 && currentMinute === 43) {
+            // 如果当前时间是20:50，则发送提醒
+            if (currentHour === 20 && currentMinute === 50) {
                 sendReminderNotification();
             }
         }
@@ -31,7 +31,7 @@
         function sendReminderNotification() {
             if (Notification.permission === "granted") {
                 new Notification("提醒", {
-                    body: "现在是20:43，该修改代码了！",
+                    body: "现在是20:50，该修改代码了！",
                     icon: "https://via.placeholder.com/48" // 可自定义图标URL
                 });
             }
