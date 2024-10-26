@@ -18,10 +18,14 @@
         // 定义检查时间的函数
         function checkReminderTime() {
             const now = new Date();
-            const currentMinute = now.getMinutes();
+            const currentHour = now.getHours();    // 获取当前小时（本地时间）
+            const currentMinute = now.getMinutes(); // 获取当前分钟（本地时间）
 
-            // 如果当前分钟数是25，则发送提醒
-            if (currentMinute === 25) {
+            // 控制台输出当前小时和分钟数（用于调试）
+            console.log("当前时间:", currentHour + ":" + currentMinute);
+
+            // 如果当前时间是20:29，则发送提醒
+            if (currentHour === 20 && currentMinute === 29) {
                 sendReminderNotification();
             }
         }
@@ -30,18 +34,18 @@
         function sendReminderNotification() {
             if (Notification.permission === "granted") {
                 new Notification("提醒", {
-                    body: "该修改代码了！",
+                    body: "现在是20:29，该修改代码了！",
                     icon: "https://via.placeholder.com/48" // 可自定义图标URL
                 });
             }
         }
 
         // 每分钟检查一次时间
-        setInterval(checkReminderTime, 60000);
+        setInterval(checkReminderTime, 6000);
     </script>
 </head>
 <body>
     <h1>定时提醒</h1>
-    <p>在25分时会提醒你该修改代码了。</p>
+    <p>在中国时间每天20:29会提醒你该修改代码了。</p>
 </body>
 </html>
