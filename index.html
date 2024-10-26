@@ -21,28 +21,41 @@
             const currentHour = now.getHours();
             const currentMinute = now.getMinutes();
 
-            // 如果当前时间是20:50，则发送提醒
-            if (currentHour === 20 && currentMinute === 50) {
-                sendReminderNotification();
+            // 如果当前时间在20:24到21:00之间，则每分钟发送5次提醒
+            if ((currentHour === 20 && currentMinute >= 24) || (currentHour === 21 && currentMinute === 0)) {
+                sendMultipleReminders();
             }
         }
 
-        // 发送通知提醒
+        // 发送多次提醒
+        function sendMultipleReminders() {
+            let count = 0;
+            const reminderInterval = setInterval(() => {
+                if (count < 5) {
+                    sendReminderNotification();
+                    count++;
+                } else {
+                    clearInterval(reminderInterval); // 停止本次多次提醒
+                }
+            }, 10000); // 每10秒发送一次提醒，1分钟内5次
+        }
+
+        // 发送单个通知提醒
         function sendReminderNotification() {
             if (Notification.permission === "granted") {
                 new Notification("提醒", {
-                    body: "现在是20:50，该修改代码了！",
+                    body: "这是您的定时提醒！",
                     icon: "https://via.placeholder.com/48" // 可自定义图标URL
                 });
             }
         }
 
         // 每分钟检查一次时间
-        setInterval(checkReminderTime, 30000);
+        setInterval(checkReminderTime, 60000);
     </script>
 </head>
 <body>
     <h1>定时提醒</h1>
-    <p>在中国时间每天20:43会提醒你该修改代码了。</p>
+    <p>每天中国时间20:24到21:00，每分钟提醒您5次。</p>
 </body>
 </html>
